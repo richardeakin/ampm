@@ -10,7 +10,7 @@ typedef std::shared_ptr<class AMPMClient> AMPMClientRef;
 
 class AMPMClient
 {
-		static AMPMClient* sInstance;
+	static std::shared_ptr<AMPMClient> sInstance;
 
 #if USE_UDP
 		ci::osc::SenderUdp mSender;
@@ -23,7 +23,7 @@ class AMPMClient
 	public:
 		static AMPMClient* get()
 		{
-			return sInstance;
+			return sInstance.get();
 		}
 		enum LogEventLevel
 		{

@@ -15,12 +15,12 @@ const boost::unordered_map<AMPMClient::LogEventLevel, const char*> LogEventLevel
         ( AMPMClient::LogEventLevel::warning, "warn" )
         ( AMPMClient::LogEventLevel::error, "error" );
 
-AMPMClient* AMPMClient::sInstance = NULL;
+std::shared_ptr<AMPMClient> AMPMClient::sInstance = nullptr;
 
 AMPMClientRef AMPMClient::create( int sendPort, int recvPort )
 {
-	sInstance = new AMPMClient( sendPort, recvPort );
-	return AMPMClientRef( sInstance );
+	sInstance = std::shared_ptr<AMPMClient>( new AMPMClient( sendPort, recvPort ) );
+	return AMPMClientRef( sInstance.get() );
 }
 
 AMPMClient::~AMPMClient()
